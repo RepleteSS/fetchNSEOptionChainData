@@ -222,9 +222,9 @@ def print_AllData(num,step,nearest,url):
             if item["strikePrice"] == strike and item["strikePrice"] < start_strike+(step*num*2):
                 #print(strCyan(str(item["strikePrice"])) + strGreen(" CE ") + "[ " + strBold(str(item["CE"]["openInterest"]).rjust(10," ")) + " ]" + strRed(" PE ")+"[ " + strBold(str(item["PE"]["openInterest"]).rjust(10," ")) + " ]")
                 #print(data["records"]["expiryDates"][0] + " " + str(item["strikePrice"]) + " CE " + "[ " + strBold(str(item["CE"]["totalTradedVolume"]).rjust(10," ")) + " ]" + " PE " + "[ " + strBold(str(item["PE"]["totalTradedVolume"]).rjust(10," ")) + " ]")
-                print(data["records"]["expiryDates"][0] + " " + str(item["strikePrice"]) + " CE " + "[ " + strBold(
-                    str(item["CE"]["totalTradedVolume"]).rjust(10, " ")) + " ]" + " PE " + "[ " + strBold(
-                    str(item["PE"]["totalTradedVolume"]).rjust(10, " ")) + " ]")
+                print(data["records"]["expiryDates"][0] + " " + " CE " + "[ " + strBold(
+                    str(item["CE"]["changeinOpenInterest"]).rjust(10, " ")) + " ]" +strBold(str(item["CE"]["openInterest"]).rjust(10, " ")) +strBold(str(item["CE"]["totalTradedVolume"]).rjust(10, " ")) +" "+ str(item["strikePrice"]) +" "+ " PE " + "[ " + strBold(
+                    str(item["PE"]["totalTradedVolume"]).rjust(10, " ")) + " ]" +strBold(str(item["PE"]["openInterest"]).rjust(10, " ")))
                 strike = strike + step
 
 set_header()
@@ -232,13 +232,15 @@ print('\033c')
 print_hr()
 print_header("Nifty",nf_ul,nf_nearest)
 print_hr()
-print_oi(10,50,nf_nearest,url_nf)
-print_ChngInOI(10,50,nf_nearest,url_nf)
-print_HighestVolume(10,50,nf_nearest,url_nf)
+#print_oi(10,50,nf_nearest,url_nf)
+#print_ChngInOI(10,50,nf_nearest,url_nf)
+#print_HighestVolume(10,50,nf_nearest,url_nf)
+
+print_AllData(10,50,nf_nearest,url_nf)
 print_hr()
 print_header("Bank Nifty",bnf_ul,bnf_nearest)
 print_hr()
-print_oi(10,100,bnf_nearest,url_bnf)
+#print_oi(10,100,bnf_nearest,url_bnf)
 print_hr()
 
 # Finding Highest OI in Call Option In Nifty
