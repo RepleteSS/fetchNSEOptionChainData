@@ -185,10 +185,10 @@ bnf_highestoi_PE = highest_oi_PE(10,100,bnf_nearest,url_bnf)
 
 #Finding Highest Vol in Call Option in Nifty
 
-nf_highestVol_CE = highest_vol_CE(10,50,nf_nearest,url_nf)
+#nf_highestVol_CE = highest_vol_CE(10,50,nf_nearest,url_nf)
 
 
-print(strCyan(str("Major Support in Nifty:")) + str(nf_highestoi_CE))
-print(strCyan(str("Major Resistance in Nifty:")) + str(nf_highestoi_PE))
-print(strPurple(str("Major Support in Bank Nifty:")) + str(bnf_highestoi_CE))
-print(strPurple(str("Major Resistance in Bank Nifty:")) + str(bnf_highestoi_PE))
+print(strCyan(str("Major Resistance in Nifty:")) + str(nf_highestoi_CE))
+print(strCyan(str("Major Support in Nifty:")) + str(nf_highestoi_PE))
+print(strPurple(str("Major Resistance in Bank Nifty:")) + str(bnf_highestoi_CE))
+print(strPurple(str("Major Support in Bank Nifty:")) + str(bnf_highestoi_PE))
