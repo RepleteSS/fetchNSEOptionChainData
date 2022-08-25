@@ -2,11 +2,8 @@
 import requests
 import json
 import math
-import csv
-import collections
-#import numpy as np
-import pandas as pd
 from datetime import datetime
+import sys
 
 # Python program to print
 # colored text and background
@@ -238,8 +235,8 @@ def print_AllData(num,step,nearest,url):
     print("---------------->>>>>> Printing ALL Data <<<<<<------------------")
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    fileName = "NSE-OptionChain_"+ current_time+".csv"
-    print(fileName)
+    fName = "NSE-OptionChain_"+ current_time+".csv"
+    print(fName)
     strike = nearest - (step*num)
     start_strike = nearest - (step*num)
     response_text = get_data(url)
@@ -250,10 +247,14 @@ def print_AllData(num,step,nearest,url):
     for item in data['records']['data']:
         if item["expiryDate"] == currExpiryDate:
             if item["strikePrice"] == strike and item["strikePrice"] < start_strike+(step*num*2):
-                print(data["records"]["expiryDates"][0] + " " + "| CE " + "|"+strBold(
-                    str(item["CE"]["changeinOpenInterest"]).rjust(10, " "))  + " |" +strBold(str(item["CE"]["openInterest"]).rjust(10, " ")) +"|"+strBold(str(item["CE"]["totalTradedVolume"]).rjust(10, " ")) +"|"+" "+ str(item["strikePrice"]) +"|"+ " PE |"  + strBold(
-                        str(item["PE"]["totalTradedVolume"]).rjust(10, " ")) + " |" +strBold(str(item["PE"]["openInterest"]).rjust(10, " ")) +"|" + strBold(str(item["PE"]["changeinOpenInterest"]).rjust(10, " "))+"|")
-                strike = strike + step
+                # print(data["records"]["expiryDates"][0] + " " + "| CE " + "|"+strBold(
+                #     str(item["CE"]["changeinOpenInterest"]).rjust(10, " "))  + " |" +strBold(str(item["CE"]["openInterest"]).rjust(10, " ")) +"|"+strBold(str(item["CE"]["totalTradedVolume"]).rjust(10, " ")) +"|"+" "+ str(item["strikePrice"]) +"|"+ " PE |"  + strBold(
+                #         str(item["PE"]["totalTradedVolume"]).rjust(10, " ")) + " |" +strBold(str(item["PE"]["openInterest"]).rjust(10, " ")) +"|" + strBold(str(item["PE"]["changeinOpenInterest"]).rjust(10, " "))+"|")
+                    x=open(fName,'a')
+                    print((data["records"]["expiryDates"][0] + " " + ",CE " + ","+strBold(
+                        str(item["CE"]["changeinOpenInterest"]).rjust(10, " "))  + "," +strBold(str(item["CE"]["openInterest"]).rjust(10, " ")) +","+strBold(str(item["CE"]["totalTradedVolume"]).rjust(10, " ")) +","+" "+ str(item["strikePrice"]) +","+ " PE,"  + strBold(
+                            str(item["PE"]["totalTradedVolume"]).rjust(10, " ")) + "," +strBold(str(item["PE"]["openInterest"]).rjust(10, " ")) +"," + strBold(str(item["PE"]["changeinOpenInterest"]).rjust(10, " "))+","),file=x)
+                    strike = strike + step
 
 
 set_header()
