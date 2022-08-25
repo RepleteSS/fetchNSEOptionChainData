@@ -3,6 +3,8 @@ import requests
 import json
 import math
 from datetime import datetime
+import schedule
+import time
 import sys
 
 # Python program to print
@@ -251,10 +253,11 @@ def print_AllData(num,step,nearest,url):
                 #     str(item["CE"]["changeinOpenInterest"]).rjust(10, " "))  + " |" +strBold(str(item["CE"]["openInterest"]).rjust(10, " ")) +"|"+strBold(str(item["CE"]["totalTradedVolume"]).rjust(10, " ")) +"|"+" "+ str(item["strikePrice"]) +"|"+ " PE |"  + strBold(
                 #         str(item["PE"]["totalTradedVolume"]).rjust(10, " ")) + " |" +strBold(str(item["PE"]["openInterest"]).rjust(10, " ")) +"|" + strBold(str(item["PE"]["changeinOpenInterest"]).rjust(10, " "))+"|")
                     x=open(fName,'a')
-                    print((data["records"]["expiryDates"][0] + " " + ",CE " + ","+strBold(
-                        str(item["CE"]["changeinOpenInterest"]).rjust(10, " "))  + "," +strBold(str(item["CE"]["openInterest"]).rjust(10, " ")) +","+strBold(str(item["CE"]["totalTradedVolume"]).rjust(10, " ")) +","+" "+ str(item["strikePrice"]) +","+ " PE,"  + strBold(
-                            str(item["PE"]["totalTradedVolume"]).rjust(10, " ")) + "," +strBold(str(item["PE"]["openInterest"]).rjust(10, " ")) +"," + strBold(str(item["PE"]["changeinOpenInterest"]).rjust(10, " "))+","),file=x)
+                    print((data["records"]["expiryDates"][0] + " " + ",CE " + ","+
+                        str(item["CE"]["changeinOpenInterest"]) + "," +str(item["CE"]["openInterest"]) +","+str(item["CE"]["totalTradedVolume"])+","+" "+ str(item["strikePrice"]) +","+ " PE,"  +
+                            str(item["PE"]["totalTradedVolume"]) + "," +str(item["PE"]["openInterest"]) +"," + str(item["PE"]["changeinOpenInterest"])+","),file=x)
                     strike = strike + step
+
 
 
 set_header()
@@ -265,8 +268,7 @@ print_hr()
 #print_oi(10,50,nf_nearest,url_nf)
 #print_ChngInOI(10,50,nf_nearest,url_nf)
 #print_HighestVolume(10,50,nf_nearest,url_nf)
-
-print_AllData(10,50,nf_nearest,url_nf)
+print_AllData(10, 50, nf_nearest, url_nf)
 print_hr()
 print_header("Bank Nifty",bnf_ul,bnf_nearest)
 print_hr()
