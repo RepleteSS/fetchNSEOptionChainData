@@ -5,8 +5,9 @@ import math
 import csv
 import collections
 #import numpy as np
-import pandas as pd
+#import pandas as pd
 from datetime import datetime
+import shutil
 
 # Python program to print
 # colored text and background
@@ -19,6 +20,11 @@ def strCyan(skk):        return "\033[96m {}\033[00m".format(skk)
 def strLightGray(skk):   return "\033[97m {}\033[00m".format(skk)
 def strBlack(skk):       return "\033[98m {}\033[00m".format(skk)
 def strBold(skk):        return "\033[1m {}\033[0m".format(skk)
+
+now = datetime.now()
+current_time = now.strftime("%H:%M:%S")
+fName = "NSE-OptionChain_"+ current_time+".csv"
+print(fName)
 
 # Method to get nearest strikes
 def round_nearest(x,num=50): return int(math.ceil(float(x)/num)*num)
@@ -238,8 +244,8 @@ def print_AllData(num,step,nearest,url):
     print("---------------->>>>>> Printing ALL Data <<<<<<------------------")
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    fileName = "NSE-OptionChain_"+ current_time+".csv"
-    print(fileName)
+    fName = "NSE-OptionChain_"+ current_time+".csv"
+    print(fName)
     strike = nearest - (step*num)
     start_strike = nearest - (step*num)
     response_text = get_data(url)
@@ -250,12 +256,42 @@ def print_AllData(num,step,nearest,url):
     for item in data['records']['data']:
         if item["expiryDate"] == currExpiryDate:
             if item["strikePrice"] == strike and item["strikePrice"] < start_strike+(step*num*2):
-                print(data["records"]["expiryDates"][0] + " " + "| CE " + "|"+strBold(
-                    str(item["CE"]["changeinOpenInterest"]).rjust(10, " "))  + " |" +strBold(str(item["CE"]["openInterest"]).rjust(10, " ")) +"|"+strBold(str(item["CE"]["totalTradedVolume"]).rjust(10, " ")) +"|"+" "+ str(item["strikePrice"]) +"|"+ " PE |"  + strBold(
-                        str(item["PE"]["totalTradedVolume"]).rjust(10, " ")) + " |" +strBold(str(item["PE"]["openInterest"]).rjust(10, " ")) +"|" + strBold(str(item["PE"]["changeinOpenInterest"]).rjust(10, " "))+"|")
-                strike = strike + step
+                # print(data["records"]["expiryDates"][0] + " " + "| CE " + "|"+strBold(
+                #     str(item["CE"]["changeinOpenInterest"]).rjust(10, " "))  + " |" +strBold(str(item["CE"]["openInterest"]).rjust(10, " ")) +"|"+strBold(str(item["CE"]["totalTradedVolume"]).rjust(10, " ")) +"|"+" "+ str(item["strikePrice"]) +"|"+ " PE |"  + strBold(
+                #         str(item["PE"]["totalTradedVolume"]).rjust(10, " ")) + " |" +strBold(str(item["PE"]["openInterest"]).rjust(10, " ")) +"|" + strBold(str(item["PE"]["changeinOpenInterest"]).rjust(10, " "))+"|")
+                    x=open(fName,'a')
+                    print((data["records"]["expiryDates"][0] + " " + ",CE " + ","+
+                        str(item["CE"]["changeinOpenInterest"]) + "," +str(item["CE"]["openInterest"]) +","+str(item["CE"]["totalTradedVolume"])+","+" "+ str(item["strikePrice"]) +","+ " PE,"  +
+                            str(item["PE"]["totalTradedVolume"]) + "," +str(item["PE"]["openInterest"]) +"," + str(item["PE"]["changeinOpenInterest"])+","),file=x)
+                    strike = strike + step
+#* * * * * python3 /home/emraannkhann/PycharmProjects/pythonProject/fetchNSEOptionChainData/imrnseOptionChain.py & mv /home/emraannkhann/NSE-OptionChain_.csv "/home/emraannkhann/PycharmProjects/pythonProject/fetchNSEOptionChainData/NSE-CSVs/NSE-OptionChain_$(date +\%d\%m\%y_\%H:\%M:\%S).csv"
+def print_AllData(num,step,nearest,url):
+    print("---------------->>>>>> Printing AfNameLL Data <<<<<<------------------")
+    strike = nearest - (step*num)
+    start_strike = nearest - (step*num)
+    response_text = get_data(url)
+    data = json.loads(response_text)
+    currExpiryDate = data["records"]["expiryDates"][0]
+    print(
+        "EXPIRY DATE |" + "CALL |" + " CHNG In OI |" + "      OI |" + "   VOLUME|" + " STRIKE PRICE |" + "PUT |" + "  VOLUME |" + "  OI |" + "   CHNG In OI|")
+    for item in data['records']['data']:
+        if item["expiryDate"] == currExpiryDate:
+            if item["strikePrice"] == strike and item["strikePrice"] < start_strike+(step*num*2):
+                # print(data["records"]["expiryDates"][0] + " " + "| CE " + "|"+strBold(
+                #     str(item["CE"]["changeinOpenInterest"]).rjust(10, " "))  + " |" +strBold(str(item["CE"]["openInterest"]).rjust(10, " ")) +"|"+strBold(str(item["CE"]["totalTradedVolume"]).rjust(10, " ")) +"|"+" "+ str(item["strikePrice"]) +"|"+ " PE |"  + strBold(
+                #         str(item["PE"]["totalTradedVolume"]).rjust(10, " ")) + " |" +strBold(str(item["PE"]["openInterest"]).rjust(10, " ")) +"|" + strBold(str(item["PE"]["changeinOpenInterest"]).rjust(10, " "))+"|")
+                    x=open("NSE-OptionChain_.csv",'a')
+                    print((data["records"]["expiryDates"][0] + " " + ",CE " + ","+
+                        str(item["CE"]["changeinOpenInterest"]) + "," +str(item["CE"]["openInterest"]) +","+str(item["CE"]["totalTradedVolume"])+","+" "+ str(item["strikePrice"]) +","+ " PE,"  +
+                            str(item["PE"]["totalTradedVolume"]) + "," +str(item["PE"]["openInterest"]) +"," + str(item["PE"]["changeinOpenInterest"])+","),file=x)
+                    strike = strike + step
 
+# crontab -e expression below
+#0 9-15/2 * * 1-5 python3 /home/emraannkhann/PycharmProjects/pythonProject/fetchNSEOptionChainData/imrnseOptionChain.py & mv /home/emraannkhann/NSE-OptionChain_.csv "/home/emraannkhann/PycharmProjects/pythonProject/fetchNSEOptionChainData/NSE-CSVs/NSE-OptionChain_$(date +\%d\%m\%y_\%H:\%M:\%S).csv"
 
+def moveCSVFile():
+    #shutil.move('/home/emraannkhann'+"NSE-OptionChain_.csv",'/home/emraannkhann/PycharmProjects/pythonProject/fetchNSEOptionChainData/NSE-CSVs'+"NSE-OptionChain_"+current_time+".csv")
+     shutil.move('/home/emraannkhann'+"NSE-OptionChain_.csv",'/home/emraannkhann/PycharmProjects/pythonProject/fetchNSEOptionChainData/NSE-CSVs')
 set_header()
 print('\033c')
 print_hr()
@@ -264,24 +300,28 @@ print_hr()
 #print_oi(10,50,nf_nearest,url_nf)
 #print_ChngInOI(10,50,nf_nearest,url_nf)
 #print_HighestVolume(10,50,nf_nearest,url_nf)
-
 print_AllData(10,50,nf_nearest,url_nf)
+moveCSVFile()
 print_hr()
-print_header("Bank Nifty",bnf_ul,bnf_nearest)
 print_hr()
 #print_oi(10,100,bnf_nearest,url_bnf)
 print_hr()
 
+# Finding Highest OI in Call Option In Nifty
+print_header("Bank Nifty",bnf_ul,bnf_nearest)
+print_hr()
+#print_oi(10,100,bnf_nearest,url_bnf)
+print_hr()
 # Finding Highest OI in Call Option In Nifty
 nf_highestoi_CE = highest_oi_CE(10,50,nf_nearest,url_nf)
 
 # Finding Highet OI in Put Option In Nifty
 nf_highestoi_PE = highest_oi_PE(10,50,nf_nearest,url_nf)
 
-# Finding Highest OI in Call Option In Bank Nifty
+# Finding Highest OI in Call Option In Bank
 bnf_highestoi_CE = highest_oi_CE(10,100,bnf_nearest,url_bnf)
 
-# Finding Highest OI in Put Option In Bank Nifty
+# Finding Highest OI in Put Option In Bank NiftyNifty
 bnf_highestoi_PE = highest_oi_PE(10,100,bnf_nearest,url_bnf)
 
 #Finding Highest Chng In OI in Call Option in Nifty
@@ -295,7 +335,6 @@ nf_highestVol_CE = highest_Vol_CE(10,50,nf_nearest,url_nf)
 
 #Finding Highest Vol in put option in Nifty
 nf_hihestVol_PE = highest_Vol_PE(10,50,nf_nearest,url_nf)
-
 print(strCyan(str("Major Resistance in Nifty:")) + str(nf_highestoi_CE))
 print(strCyan(str("Major Support in Nifty:")) + str(nf_highestoi_PE))
 print(strRed(str("Major Resistance in Bank Nifty:")) + str(bnf_highestoi_CE))
