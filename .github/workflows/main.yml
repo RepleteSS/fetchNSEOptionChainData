@@ -10,7 +10,7 @@ on:
  # pull_request:
  #   branches: [ "main" ]
  schedule: 
-  - cron: 0 9-15/2 * * 1-5 # Runs every 2 hrs from 9am to 3PM for all weekdays  
+   - cron: 0 9-15/2 * * 1-5 # Runs every 2 hrs from 9am to 3PM for all weekdays  
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
