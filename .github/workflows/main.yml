@@ -4,11 +4,9 @@ name: NOTIFY-EVERY-2HRS-NSE-OPTIONCHAIN
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
  push:
    branches: [ "main" ]
- # pull_request:
- #   branches: [ "main" ]
+   
  schedule: 
    - cron: 0 9-15/2 * * 1-5 # Runs every 2 hrs from 9am to 3PM for all weekdays  
 
