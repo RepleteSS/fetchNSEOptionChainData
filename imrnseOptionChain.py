@@ -6,6 +6,7 @@ import json
 import math
 from datetime import datetime
 import shutil
+from pytz import timezone
 
 # Python program to print
 # colored text and background
@@ -20,9 +21,9 @@ def strBlack(skk):       return "\033[98m {}\033[00m".format(skk)
 def strBold(skk):        return "\033[1m {}\033[0m".format(skk)
 
 now = datetime.now()
-current_time = now.strftime("%H:%M:%S")
-date = datetime.now().strftime("%Y_%m_%d-%I:%M:%S_%p")
-fName = "NSE-OptionChain_"+ date+".csv"
+format = "%Y-%m-%d %H:%M:%S %Z%z"
+now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
+fName = "NSE-OptionChain_"+ now_asia.strftime(format)+".csv"
 print(fName)
 
 # Method to get nearest strikes
