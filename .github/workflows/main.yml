@@ -2,7 +2,7 @@ name: run imrnseOptionChain.py
 
 on:
   schedule:
-    - cron: '0,30 9-15 * * MON-FRI' # Runs from 9am - 3pm for every 2 hrs from Monday - Friday
+    - cron: '0,15 9-15 * * MON-FRI' # Runs from 9am - 3pm for every 2 hrs from Monday - Friday
  #   - cron: '* * * * *'
 
 jobs:
