@@ -265,7 +265,7 @@ def highest_oi_PE(num,step,nearest,url):
 #                     strike = strike + step
 #* * * * * python3 /home/emraannkhann/PycharmProjects/pythonProject/fetchNSEOptionChainData/imrnseOptionChain.py & mv /home/emraannkhann/NSE-OptionChain_.csv "/home/emraannkhann/PycharmProjects/pythonProject/fetchNSEOptionChainData/NSE-CSVs/NSE-OptionChain_$(date +\%d\%m\%y_\%H:\%M:\%S).csv"
 def print_AllData(num,step,nearest,url):
-    print("---------------->>>>>> Printing AfNameLL Data <<<<<<------------------")
+    print("---------------->>>>>> PRINT NIFTY OPTION CHAIN ALL DATA <<<<<<------------------")
     # now = datetime.now()
     # current_time = now.strftime("%H:%M:%S")
     # date = datetime.now().strftime("%Y_%m_%d-%I:%M:%S_%p")
