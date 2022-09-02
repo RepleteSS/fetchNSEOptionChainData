@@ -22,6 +22,7 @@ def strBold(skk):        return "\033[1m {}\033[0m".format(skk)
 
 now = datetime.now()
 format = "%Y-%m-%d %H:%M:%S %Z%z"
+now_utc = datetime.now(timezone('UTC'))
 now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
 fName = "NSE-OptionChain_"+ now_asia.strftime(format)+".csv"
 print(fName)
