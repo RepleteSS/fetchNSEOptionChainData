@@ -154,7 +154,7 @@ def highest_ChngInOI_CE_Data(num,step,nearest,url):
                 strike = strike + step
     return max_OiChng
 
-# Finding highest Volume of People's in CE based on CE data
+# Finding highest Oi Change in PE based on PE data
 def highest_ChngInOI_PE(num,step,nearest,url):
     strike = nearest - (step*num)
     start_strike = nearest - (step*num)
