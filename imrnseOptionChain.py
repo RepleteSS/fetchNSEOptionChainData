@@ -119,42 +119,77 @@ def highest_oi_CE(num,step,nearest,url):
     return max_oi_strike
 
 # Finding highest Volume of People's in CE based on CE data
+# Finding highest Change In OI Strike Price in CE based on CE data
 def highest_ChngInOI_CE(num,step,nearest,url):
     strike = nearest - (step*num)
     start_strike = nearest - (step*num)
     response_text = get_data(url)
     data = json.loads(response_text)
     currExpiryDate = data["records"]["expiryDates"][0]
-    max_vol = 0
-    max_vol_strike = 0
+    max_OiChng = 0
+    max_oiChng_strike = 0
     for item in data['records']['data']:
         if item["expiryDate"] == currExpiryDate:
             if item["strikePrice"] == strike and item["strikePrice"] < start_strike+(step*num*2):
-                if item["CE"]["openInterest"] > max_vol:
-                    max_vol = item["CE"]["changeinOpenInterest"]
-                    max_vol_strike = item["strikePrice"]
+                if item["CE"]["changeinOpenInterest"] > max_OiChng:
+                    max_OiChng = item["CE"]["changeinOpenInterest"]
+                    max_oiChng_strike = item["strikePrice"]
                 strike = strike + step
-    return max_vol_strike
+    return max_oiChng_strike
 
+# Finding highest Change In OI Data in CE based on CE data
+def highest_ChngInOI_CE_Data(num,step,nearest,url):
+    strike = nearest - (step*num)
+    start_strike = nearest - (step*num)
+    response_text = get_data(url)
+    data = json.loads(response_text)
+    currExpiryDate = data["records"]["expiryDates"][0]
+    max_OiChng = 0
+    max_oiChng_strike = 0
+    for item in data['records']['data']:
+        if item["expiryDate"] == currExpiryDate:
+            if item["strikePrice"] == strike and item["strikePrice"] < start_strike+(step*num*2):
+                if item["CE"]["changeinOpenInterest"] > max_OiChng:
+                    max_OiChng = item["CE"]["changeinOpenInterest"]
+                    max_oiChng_strike = item["strikePrice"]
+                strike = strike + step
+    return max_OiChng
 
-# Finding highest Volume of People's in CE based on CE data
+# Finding highest Change In OI Strik Price in PE based on PE data
 def highest_ChngInOI_PE(num,step,nearest,url):
     strike = nearest - (step*num)
     start_strike = nearest - (step*num)
     response_text = get_data(url)
     data = json.loads(response_text)
     currExpiryDate = data["records"]["expiryDates"][0]
-    max_vol = 0
-    max_vol_strike = 0
+    max_OiChng = 0
+    max_OiChng_strike = 0
     for item in data['records']['data']:
         if item["expiryDate"] == currExpiryDate:
             if item["strikePrice"] == strike and item["strikePrice"] < start_strike+(step*num*2):
-                if item["PE"]["openInterest"] > max_vol:
-                    max_vol = item["PE"]["changeinOpenInterest"]
-                    max_vol_strike = item["strikePrice"]
+                if item["PE"]["changeinOpenInterest"] > max_OiChng:
+                    max_OiChng = item["PE"]["changeinOpenInterest"]
+                    max_OiChng_strike = item["strikePrice"]
                 strike = strike + step
-    return max_vol_strike
+    return max_OiChng_strike
 
+#Finding highest Change In OI Data in PE based on PE data
+def highest_ChngInOI_PE_Data(num,step,nearest,url):
+    strike = nearest - (step*num)
+    start_strike = nearest - (step*num)
+    response_text = get_data(url)
+    data = json.loads(response_text)
+    currExpiryDate = data["records"]["expiryDates"][0]
+    max_OiChng = 0
+    max_OiChng_strike = 0
+    for item in data['records']['data']:
+        if item["expiryDate"] == currExpiryDate:
+            if item["strikePrice"] == strike and item["strikePrice"] < start_strike+(step*num*2):
+                if item["PE"]["changeinOpenInterest"] > max_OiChng:
+                    max_OiChng = item["PE"]["changeinOpenInterest"]
+                    max_OiChng_strike = item["strikePrice"]
+                strike = strike + step
+    return max_OiChng
 
 # Fetching CE and PE data based on Nearest Expiry Date
 def print_ChngInOI(num,step,nearest,url):
@@ -191,6 +226,25 @@ def highest_Vol_CE(num, step, nearest, url):
                             max_vol_strike = item["strikePrice"]
                         strike = strike + step
             return max_vol_strike
+
+
+def highest_Volume_Data_CE(num, step, nearest, url):
+    # print("-------------------->>>>>>>>>>>>>>> Find HIGHEST VOLUME AT CE <<<<<<<<<<<<<----------------------------")
+    strike = nearest - (step * num)
+    start_strike = nearest - (step * num)
+    response_text = get_data(url)
+    data = json.loads(response_text)
+    currExpiryDate = data["records"]["expiryDates"][0]
+    max_vol_data = 0
+    max_vol_strike = 0
+    for item in data['records']['data']:
+        if item["expiryDate"] == currExpiryDate:
+            if item["strikePrice"] == strike and item["strikePrice"] < start_strike + (step * num * 2):
+                if item["CE"]["totalTradedVolume"] > max_vol_data:
+                    max_vol_data = item["CE"]["totalTradedVolume"]
+                    max_vol_strike = item["strikePrice"]
+                strike = strike + step
+    return max_vol_data
 def highest_Vol_PE(num, step, nearest, url):
            # print("-------------------->>>>>>>>>>>>>>> Find HIGHEST VOLUME AT PE <<<<<<<<<<<<<----------------------------")
             strike = nearest - (step * num)
@@ -203,12 +257,30 @@ def highest_Vol_PE(num, step, nearest, url):
             for item in data['records']['data']:
                 if item["expiryDate"] == currExpiryDate:
                     if item["strikePrice"] == strike and item["strikePrice"] < start_strike + (step * num * 2):
-                        if item["CE"]["totalTradedVolume"] > max_vol:
+                        if item["PE"]["totalTradedVolume"] > max_vol:
                             max_vol = item["PE"]["totalTradedVolume"]
                             max_vol_strike = item["strikePrice"]
                         strike = strike + step
             return max_vol_strike
 
+
+def highest_Volume_Data_PE(num, step, nearest, url):
+    # print("-------------------->>>>>>>>>>>>>>> Find HIGHEST VOLUME AT CE <<<<<<<<<<<<<----------------------------")
+    strike = nearest - (step * num)
+    start_strike = nearest - (step * num)
+    response_text = get_data(url)
+    data = json.loads(response_text)
+    currExpiryDate = data["records"]["expiryDates"][0]
+    max_vol_data = 0
+    max_vol_strike = 0
+    for item in data['records']['data']:
+        if item["expiryDate"] == currExpiryDate:
+            if item["strikePrice"] == strike and item["strikePrice"] < start_strike + (step * num * 2):
+                if item["PE"]["totalTradedVolume"] > max_vol_data:
+                    max_vol_data = item["PE"]["totalTradedVolume"]
+                    max_vol_strike = item["strikePrice"]
+                strike = strike + step
+    return max_vol_data
 def print_HighestVolume(num,step,nearest,url):
     print("--------------->>>>>>>>>>> Printing Highest Vol Data <<<<<<<<<-------------------------")
     strike = nearest - (step*num)
@@ -307,16 +379,13 @@ print_hr()
 #print_HighestVolume(10,50,nf_nearest,url_nf)
 print_AllData(10,50,nf_nearest,url_nf)
 #moveCSVFile()
+#print_oi(10,100,bnf_nearest,url_bnf)
 print_hr()
-print_hr()
+# Finding Highest OI in Call Option In Nifty
+print_header("Bank Nifty",bnf_ul,bnf_nearest)
 #print_oi(10,100,bnf_nearest,url_bnf)
 print_hr()
 
-# Finding Highest OI in Call Option In Nifty
-print_header("Bank Nifty",bnf_ul,bnf_nearest)
-print_hr()
-#print_oi(10,100,bnf_nearest,url_bnf)
-print_hr()
 # Finding Highest OI in Call Option In Nifty
 nf_highestoi_CE = highest_oi_CE(10,50,nf_nearest,url_nf)
 
@@ -325,6 +394,9 @@ nf_highestoi_PE = highest_oi_PE(10,50,nf_nearest,url_nf)
 
 # Finding Highest OI in Call Option In Bank
 bnf_highestoi_CE = highest_oi_CE(10,100,bnf_nearest,url_bnf)
+
+#Finding Highest OI Chang Data in Call in CALL
+nf_highestOiChng_CE_Data = highest_ChngInOI_CE_Data(10,50,nf_nearest,url_nf)
 
 # Finding Highest OI in Put Option In Bank NiftyNifty
 bnf_highestoi_PE = highest_oi_PE(10,100,bnf_nearest,url_bnf)
@@ -335,16 +407,26 @@ nf_highestOiChng_CE = highest_ChngInOI_CE(10,50,nf_nearest,url_nf)
 #Finding Highest Chng In OI in PUT Option in Nifty
 nf_highestOiChng_PE = highest_ChngInOI_PE(10,50,nf_nearest,url_nf)
 
+#Finding Highest OI Chang Data in PUT in CALL
+nf_highestOiChng_PE_Data = highest_ChngInOI_PE_Data(10,50,nf_nearest,url_nf)
+
 #Finding Highest Vol in call option in Nifty
 nf_highestVol_CE = highest_Vol_CE(10,50,nf_nearest,url_nf)
 
+#Finding highest volumen data in call side
+nf_highestVolData_CE = highest_Volume_Data_CE(10,50,nf_nearest,url_nf)
+
 #Finding Highest Vol in put option in Nifty
 nf_hihestVol_PE = highest_Vol_PE(10,50,nf_nearest,url_nf)
-print(strCyan(str("Major Resistance in Nifty:")) + str(nf_highestoi_CE))
-print(strCyan(str("Major Support in Nifty:")) + str(nf_highestoi_PE))
-print(strRed(str("Major Resistance in Bank Nifty:")) + str(bnf_highestoi_CE))
-print(strGreen(str("Major Support in Bank Nifty:")) + str(bnf_highestoi_PE))
-print(strRed(str("Highest Chng In OI CE:")) + str(nf_highestOiChng_CE))
-print(strGreen(str("Highest Chng In OI PE:")) + str(nf_highestOiChng_PE))
-print(strRed(str("Highest Vol in CE (RESISTANCE):")) + str(nf_highestVol_CE))
-print(strGreen(str("Highest Vol in PE (SUPPORT):"))+str(nf_hihestVol_PE))
+
+#Finding Highest Vol in put option in Nifty
+nf_highestVolData_PE = highest_Volume_Data_PE(10,50,nf_nearest,url_nf)
+
+print(strCyan(str("Major Resistance in Nifty:")) + str(nf_highestoi_CE)+"\n")
+print(strCyan(str("Major Support in Nifty:")) + str(nf_highestoi_PE)+"\n")
+print(strRed(str("Major Resistance in Bank Nifty:")) + str(bnf_highestoi_CE)+"\n")
+print(strGreen(str("Major Support in Bank Nifty:")) + str(bnf_highestoi_PE)+"\n")
+print(strYellow(str("Highest Chng In OI CE |STRIKE PRICE| AND |ChngInOIData| :-> "))+ str(nf_highestOiChng_CE) +" : "+ "CE | "+str(nf_highestOiChng_CE_Data)+" |"+"\n")
+print(strYellow(str("Highest Chng In OI PE |STRIKE PRICE| AND |ChngInOIData| :-> "))+ str(nf_highestOiChng_PE) +" : "+ "PE | "+str(nf_highestOiChng_PE_Data)+" |"+"\n")
+print(strGreen(str("Highest VOLUME in CE |STRIKE PRICE| AND |RESISTANCE|:-> ")) + str(nf_highestVol_CE)+ " : "+ "CE | "+str(nf_highestVolData_CE)+" |"+"\n")
+print(strGreen(str("Highest VOLUME in PE |STRIKE PRICE| AND |SUPPORT|: -> "))+"  "+str(nf_hihestVol_PE)+ " : "+ "PE | "+str(nf_highestVolData_PE)+" |"+"\n")
