@@ -6,7 +6,6 @@ import json
 import math
 from datetime import datetime
 import shutil
-from pytz import timezone
 
 # Python program to print
 # colored text and background
