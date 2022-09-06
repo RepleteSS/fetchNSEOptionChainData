@@ -429,9 +429,9 @@ print_hr()
 print_AllData(10,50,nf_nearest,url_nf)
 #moveCSVFile()
 #print_oi(10,100,bnf_nearest,url_bnf)
-print_hr()
+#print_hr()
 # Finding Highest OI in Call Option In Nifty
-print_header("Bank Nifty",bnf_ul,bnf_nearest)
+#print_header("Bank Nifty",bnf_ul,bnf_nearest)
 #print_oi(10,100,bnf_nearest,url_bnf)
 print_hr()
 
